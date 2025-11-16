@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Frederick David | Social Media & Marketing Portfolio</title>
+    <!-- Load Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Load Lucide Icons for aesthetic vectors -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        /* Custom Styles for better aesthetics and feel */
+        :root {
+            --primary-color: #f59e0b; /* Amber-500 for a marketing/sales focus */
+            --secondary-color: #2563EB; /* Blue-600 */
+            --bg-dark: #0f172a; /* Slate-900 */
+            --bg-card: #1e293b; /* Slate-800 */
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-dark);
+            color: #e2e8f0; /* Slate-200 */
+            transition: background-color 0.3s;
+        }
+        .text-primary { color: var(--primary-color); }
+        .bg-primary { background-color: var(--primary-color); }
+        .text-secondary { color: var(--secondary-color); }
+
+        .card-project {
+            transition: transform 0.3s ease, box-shadow 0.3s ease, opacity 0.3s ease;
+            cursor: pointer;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            background-color: var(--bg-card);
+        }
+        .card-project:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
+            opacity: 0.95;
+        }
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-right: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+        /* Style for the Modal/Case Study Pop-up */
+        .modal-content {
+            max-height: 90vh;
+            overflow-y: auto;
+            scrollbar-width: thin; /* Firefox */
+            scrollbar-color: var(--primary-color) #1e293b; /* Scrollbar color */
+        }
+        .modal-content::-webkit-scrollbar {
+            width: 8px;
+        }
+        .modal-content::-webkit-scrollbar-track {
+            background: #1e293b;
+        }
+        .modal-content::-webkit-scrollbar-thumb {
+            background-color: var(--primary-color);
+            border-radius: 20px;
+            border: 2px solid #1e293b;
+        }
+    </style>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            DEFAULT: '#f59e0b',
+                            dark: '#d97706',
+                        },
+                        secondary: '#2563EB',
+                        'bg-dark': '#0f172a',
+                        'bg-card': '#1e293b',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="min-h-screen">
+
+    <!-- Case Study Data (Structured for easy rendering) -->
+    <script>
+        const PROJECT_DATA = [
+            {
+                id: 'yes',
+                title: 'Young Entrepreneurs Society',
+                subtitle: 'Founder & Social Media Growth',
+                industry: 'Community/Education',
+                challenge: 'Drive engagement and grow the social media presence and reach of a new online community from scratch.',
+                solution: 'Implemented a strategic 3-pillar content strategy, focusing on educational, inspirational, and highly interactive content (quizzes, polls, live AMA sessions). Designed all branded visual and video content using Canva and CapCut.',
+                results: 'Achieved a 1,000+ follower base in 3 months (from zero). Increased post interaction/engagement by over 50% and built a highly participatory online community.',
+                tags: ['Content Strategy', 'Community Building', 'Rapid Growth', 'Content Creation'],
+                image: 'https://placehold.co/400x250/f59e0b/1e293b?text=Y.E.S.+Project'
+            },
+            {
+                id: 'dajens',
+                title: 'Dajens Market Place',
+                subtitle: 'Digital Visibility & Follower Growth',
+                industry: 'E-commerce/Retail',
+                challenge: 'Establish social presence from scratch and develop a digital strategy to increase marketplace visibility and drive online sales.',
+                solution: 'Developed and executed a strategic content calendar focused on product utility, trust-building, and market trends. Implemented robust audience engagement tactics and optimized content for maximum reach.',
+                results: 'Achieved 40% growth in followers in the first 2 months, significantly boosting online brand awareness and increasing high-quality traffic directed to the e-commerce marketplace.',
+                tags: ['Digital Strategy', 'Audience Engagement', 'Sales Funnel', 'Analytics'],
+                image: 'https://placehold.co/400x250/1e293b/f59e0b?text=Dajens+Market+Place'
+            },
+            {
+                id: 'adija',
+                title: 'Adija Foods',
+                subtitle: 'Brand Rebranding & Campaign Leadership',
+                industry: 'Food & Beverage',
+                challenge: 'Modernize the established brand identity and launch successful marketing campaigns to increase visibility, social interactions, and conversions (online/offline).',
+                solution: 'Directed a full-scale rebranding effort covering logo design, tone of voice, and messaging format. Led successful seasonal food campaigns and established an influencer collaboration program for expanded reach.',
+                results: 'Successfully drove a 60% increase in social media interactions and contributed to increased online sales and offline traffic during key promotional periods. Page growth exceeded 40% in 3 months post-rebrand.',
+                tags: ['Branding', 'Campaign Management', 'Influencer Marketing', 'Sales Growth'],
+                image: 'https://placehold.co/400x250/2563EB/ffffff?text=Adija+Rebrand'
+            },
+            {
+                id: 'richmary',
+                title: 'Rich Mary Discovery Ltd',
+                subtitle: 'Brand Strategy & Analysis Consulting',
+                industry: 'Consulting/B2B',
+                challenge: 'Provide data-driven brand analysis and positioning guidance to improve content performance and market relevance.',
+                solution: 'Delivered in-depth reports with clear insights on audience behavior, engagement metrics, and competitor content performance. Set up scalable systems for consistent content publishing and brand maintenance across platforms.',
+                results: 'Improved brand positioning clarity and established a predictable content pipeline, resulting in measurably higher engagement rates and a stronger foundation for future growth campaigns.',
+                tags: ['Market Research', 'Data Analysis', 'Strategy Consulting', 'Content Pipeline'],
+                image: 'https://placehold.co/400x250/2563EB/ffffff?text=Rich+Mary+Analysis'
+            }
+        ];
+
+        const SERVICES_DATA = [
+            { icon: 'target', name: 'Project & Campaign Leadership', description: 'End-to-end management of complex marketing and social campaigns, ensuring timely delivery and alignment with sales targets.' },
+            { icon: 'trending-up', name: 'Social Strategy & Execution', description: 'Developing data-driven strategies for platforms (Instagram, TikTok, LinkedIn) and managing content calendars for measurable performance.' },
+            { icon: 'lightbulb', name: 'Idea Generation & Content', description: 'Creating trend-informed, high-converting content concepts and visual assets using professional tools like Canva and CapCut.' },
+            { icon: 'palette', name: 'Branding & Rebranding', description: 'Full-scale brand identity development, including logo, tone of voice, style guides, and overall market positioning.' },
+        ];
+    </script>
+    
+    <!-- Modal Container -->
+    <div id="caseStudyModal" class="fixed inset-0 z-[100] hidden bg-black bg-opacity-75 items-center justify-center p-4" onclick="closeModal(event)">
+        <div class="bg-bg-card rounded-xl shadow-2xl w-full max-w-4xl transform transition-all duration-300" onclick="event.stopPropagation()">
+            <div class="modal-content">
+                <!-- Modal content injected here -->
+            </div>
+            <button onclick="document.getElementById('caseStudyModal').classList.add('hidden')" class="absolute top-4 right-4 text-white hover:text-primary transition">
+                <i data-lucide="x" class="w-8 h-8"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- Navigation (Simple Top Bar) -->
+    <header class="sticky top-0 z-50 bg-bg-dark/95 backdrop-blur-sm shadow-xl border-b border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
+            <h1 class="text-2xl font-bold text-white">Frederick David.</h1>
+            <nav class="hidden md:flex space-x-8 text-sm font-medium">
+                <a href="#home" class="hover:text-primary transition duration-200">Home</a>
+                <a href="#projects" class="hover:text-primary transition duration-200">Projects</a>
+                <a href="#services" class="hover:text-primary transition duration-200">Services</a>
+                <a href="#contact" class="hover:text-primary transition duration-200">Contact</a>
+            </nav>
+            <button id="mobile-menu-btn" class="md:hidden text-white hover:text-primary">
+                <i data-lucide="menu" class="w-6 h-6"></i>
+            </button>
+        </div>
+        <!-- Mobile Menu (Hidden by default) -->
+        <nav id="mobile-menu" class="md:hidden bg-bg-dark border-t border-slate-800 hidden">
+            <a href="#home" class="block py-2 px-6 text-sm hover:bg-slate-800" onclick="toggleMobileMenu()">Home</a>
+            <a href="#projects" class="block py-2 px-6 text-sm hover:bg-slate-800" onclick="toggleMobileMenu()">Projects</a>
+            <a href="#services" class="block py-2 px-6 text-sm hover:bg-slate-800" onclick="toggleMobileMenu()">Services</a>
+            <a href="#contact" class="block py-2 px-6 text-sm hover:bg-slate-800" onclick="toggleMobileMenu()">Contact</a>
+        </nav>
+    </header>
+
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        <!-- 1. Hero/About Section -->
+        <section id="home" class="py-20 md:py-32 flex flex-col md:flex-row items-center justify-between space-y-10 md:space-y-0 md:space-x-12">
+            
+            <!-- Text Content -->
+            <div class="md:w-3/5 text-center md:text-left">
+                <p class="text-primary text-lg font-semibold mb-3">Hello, I'm Frederick David</p>
+                <h2 class="text-5xl md:text-6xl font-extrabold leading-tight mb-6">
+                    Sales-Driven <span class="text-secondary">Marketing Strategist</span> & Project Leader.
+                </h2>
+                <p class="text-xl text-slate-400 mb-8">
+                    I drive brand growth by connecting research analytics with fresh idea generation to build high-impact content creation and successful marketing strategies that boost conversions and sales.
+                </p>
+                <div class="flex flex-wrap justify-center md:justify-start gap-4">
+                    <a href="#projects" class="bg-primary hover:bg-primary-dark text-white font-semibold py-3 px-8 rounded-lg transition duration-300 transform hover:scale-105 shadow-lg shadow-yellow-500/50 flex items-center">
+                        View Case Studies <i data-lucide="arrow-right" class="w-5 h-5 ml-2"></i>
+                    </a>
+                    <a href="#contact" class="bg-slate-700 hover:bg-slate-600 text-white font-semibold py-3 px-8 rounded-lg transition duration-300 transform hover:scale-105 shadow-lg shadow-slate-800/50 flex items-center">
+                        Let's Talk <i data-lucide="message-square" class="w-5 h-5 ml-2"></i>
+                    </a>
+                </div>
+                
+                <!-- Social Links -->
+                <div class="mt-8 pt-6 border-t border-slate-700 flex flex-wrap justify-center md:justify-start items-center space-x-6">
+                    <a href="https://www.linkedin.com/in/frederick-david-413270293" target="_blank" class="text-slate-400 hover:text-primary transition duration-200" title="LinkedIn"><i data-lucide="linkedin" class="w-6 h-6"></i></a>
+                    <a href="https://www.instagram.com/frederick_david_/" target="_blank" class="text-slate-400 hover:text-primary transition duration-200" title="Instagram"><i data-lucide="instagram" class="w-6 h-6"></i></a>
+                    <a href="https://www.facebook.com/frederick.david.7731" target="_blank" class="text-slate-400 hover:text-primary transition duration-200" title="Facebook"><i data-lucide="facebook" class="w-6 h-6"></i></a>
+                    <a href="mailto:olumideaiyedogbon@gmail.com" class="text-slate-400 hover:text-primary transition duration-200" title="Primary Email"><i data-lucide="mail" class="w-6 h-6"></i></a>
+                </div>
+            </div>
+
+            <!-- Profile Image (UPDATED with correct file ID) -->
+            <div class="md:w-2/5 flex justify-center relative">
+                <div class="relative p-2 rounded-full border-4 border-primary shadow-2xl shadow-primary/30">
+                    <img id="profile-img" 
+                         src="uploaded:WhatsApp Image 2025-04-07 at 16.39.18_d441e40d.jpg-e9619d12-c75e-42c3-8487-00e0cbca6f03" 
+                         alt="Frederick David Professional Profile"
+                         class="w-80 h-80 object-cover rounded-full">
+                </div>
+            </div>
+        </section>
+
+        <!-- 2. Projects/Case Studies Section -->
+        <section id="projects" class="py-16 md:py-24">
+            <h3 class="text-4xl font-bold text-center mb-16">
+                Key <span class="text-primary">Projects</span> & Proven Results
+            </h3>
+            
+            <div id="projects-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <!-- Project cards will be injected here by JavaScript -->
+            </div>
+        </section>
+
+        <!-- 3. Services Section -->
+        <section id="services" class="py-16 md:py-24 bg-bg-card rounded-xl shadow-xl border border-slate-700">
+            <h3 class="text-4xl font-bold text-center mb-16">
+                Specialized <span class="text-primary">Services</span> Offered
+            </h3>
+            <div id="services-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 px-4 sm:px-8">
+                <!-- Service cards will be injected here by JavaScript -->
+            </div>
+        </section>
+
+        <!-- 4. Contact Section -->
+        <section id="contact" class="py-16 md:py-24 text-center">
+            <h3 class="text-4xl font-bold mb-6">
+                Ready to Boost Your <span class="text-primary">Sales & Visibility?</span>
+            </h3>
+            <p class="text-xl text-slate-400 max-w-3xl mx-auto mb-10">
+                Let's discuss how data-driven strategy and high-impact content can elevate your brand.
+            </p>
+            
+            <div class="space-y-4 md:space-y-0 md:space-x-8 flex flex-col md:flex-row justify-center items-center">
+                <a href="mailto:olumideaiyedogbon@gmail.com" class="text-lg bg-secondary hover:bg-blue-600 text-white font-semibold py-3 px-8 rounded-lg transition duration-300 transform hover:scale-105 flex items-center">
+                    <i data-lucide="mail" class="w-5 h-5 mr-2"></i> Primary Email
+                </a>
+                <a href="mailto:davisfrede70@gmail.com" class="text-lg bg-slate-700 hover:bg-slate-600 text-white font-semibold py-3 px-8 rounded-lg transition duration-300 transform hover:scale-105 flex items-center">
+                    <i data-lucide="mail" class="w-5 h-5 mr-2"></i> Secondary Email
+                </a>
+                <a href="tel:+2349029466003" class="text-lg bg-green-500 hover:bg-green-600 text-white font-semibold py-3 px-8 rounded-lg transition duration-300 transform hover:scale-105 flex items-center">
+                    <i data-lucide="phone" class="w-5 h-5 mr-2"></i> Call Me (09029466003)
+                </a>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="mt-12 py-6 bg-slate-900 border-t border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-sm text-slate-500">
+            &copy; 2025 Frederick David. Built for professional brand collaboration.
+        </div>
+    </footer>
+
+    <script>
+        // Initialize Icons
+        lucide.createIcons();
+
+        // --- Core Functions ---
+
+        // Mobile Menu Toggle
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        }
+        document.getElementById('mobile-menu-btn').addEventListener('click', toggleMobileMenu);
+
+
+        // Modal Handlers
+        function generateModalContent(project) {
+            const modalContent = `
+                <div class="p-6 sm:p-10">
+                    <h4 class="text-4xl font-bold text-primary mb-2">${project.title}</h4>
+                    <p class="text-xl text-slate-400 mb-6">${project.subtitle} | ${project.industry}</p>
+                    
+                    <div class="mb-8">
+                        <img src="${project.image}" alt="${project.title} Project Image" class="w-full h-auto rounded-lg shadow-xl mb-4" />
+                        <div class="mt-4 flex flex-wrap">
+                            ${project.tags.map(tag => `<span class="badge bg-slate-700 text-slate-200">${tag}</span>`).join('')}
+                        </div>
+                    </div>
+
+                    <div class="space-y-6">
+                        <!-- Challenge -->
+                        <div>
+                            <h5 class="text-2xl font-semibold mb-2 flex items-center text-secondary">
+                                <i data-lucide="zap" class="w-5 h-5 mr-2"></i> The Challenge
+                            </h5>
+                            <p class="text-slate-300">${project.challenge}</p>
+                        </div>
+                        
+                        <!-- Solution -->
+                        <div>
+                            <h5 class="text-2xl font-semibold mb-2 flex items-center text-secondary">
+                                <i data-lucide="lightbulb" class="w-5 h-5 mr-2"></i> The Strategy
+                            </h5>
+                            <p class="text-slate-300">${project.solution}</p>
+                        </div>
+                        
+                        <!-- Results -->
+                        <div>
+                            <h5 class="text-2xl font-semibold mb-2 flex items-center text-secondary">
+                                <i data-lucide="bar-chart-2" class="w-5 h-5 mr-2"></i> Key Results
+                            </h5>
+                            <p class="text-slate-300">${project.results}</p>
+                        </div>
+                    </div>
+                </div>
+            `;
+            return modalContent;
+        }
+
+        function showCaseStudy(projectId) {
+            const project = PROJECT_DATA.find(p => p.id === projectId);
+            if (!project) return;
+
+            const modal = document.getElementById('caseStudyModal');
+            const modalBody = modal.querySelector('.modal-content');
+            
+            modalBody.innerHTML = generateModalContent(project);
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            
+            // Re-render icons inside the modal
+            lucide.createIcons();
+        }
+
+        function closeModal(event) {
+            if (event.target.id === 'caseStudyModal') {
+                document.getElementById('caseStudyModal').classList.add('hidden');
+            }
+        }
+
+
+        // --- Render Functions ---
+
+        // Render Project Cards
+        function renderProjects() {
+            const grid = document.getElementById('projects-grid');
+            let html = '';
+
+            PROJECT_DATA.forEach(project => {
+                html += `
+                    <div class="card-project rounded-xl p-5 shadow-lg flex flex-col justify-between" onclick="showCaseStudy('${project.id}')">
+                        <div>
+                            <div class="p-3 bg-primary/20 inline-block rounded-full mb-3">
+                                <i data-lucide="briefcase" class="w-6 h-6 text-primary"></i>
+                            </div>
+                            <h4 class="text-xl font-bold mb-1">${project.title}</h4>
+                            <p class="text-slate-400 mb-4">${project.subtitle}</p>
+                            <div class="text-sm text-slate-500 mb-4">
+                                ${project.tags.slice(0, 2).map(tag => `<span class="inline-block bg-slate-700 text-slate-300 rounded-full px-3 py-1 text-xs font-semibold mr-2">${tag}</span>`).join('')}
+                            </div>
+                        </div>
+                        <p class="text-primary font-bold mt-4 flex items-center">
+                            View Details <i data-lucide="chevrons-right" class="w-4 h-4 ml-2"></i>
+                        </p>
+                    </div>
+                `;
+            });
+
+            grid.innerHTML = html;
+        }
+
+        // Render Service Cards
+        function renderServices() {
+            const grid = document.getElementById('services-grid');
+            let html = '';
+
+            SERVICES_DATA.forEach(service => {
+                html += `
+                    <div class="bg-slate-800 p-6 rounded-lg shadow-xl border border-slate-700 hover:border-primary transition duration-300">
+                        <div class="p-3 bg-secondary/20 inline-block rounded-lg mb-4">
+                            <i data-lucide="${service.icon}" class="w-7 h-7 text-secondary"></i>
+                        </div>
+                        <h4 class="text-xl font-bold mb-3">${service.name}</h4>
+                        <p class="text-slate-400">${service.description}</p>
+                    </div>
+                `;
+            });
+
+            grid.innerHTML = html;
+        }
+
+
+        // --- Initial Load ---
+        window.onload = () => {
+            renderProjects();
+            renderServices();
+            lucide.createIcons();
+        };
+    </script>
+
+</body>
+</html>
